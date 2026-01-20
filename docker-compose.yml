@@ -1,0 +1,33 @@
+services:
+  # --- Base de datos MySQL (Para Jugadores/Ranking) ---
+  mysql-blackjack:
+    image: mysql:8.0
+    container_name: blackjack-mysql
+    ports:
+      - "3307:3306" # Puerto externo 3307
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: blackjack_db
+    volumes:
+      - mysql_blackjack_data:/var/lib/mysql
+    networks:
+      - blackjack-network
+
+  # --- Base de datos MongoDB (Para Partidas/Historial) ---
+  mongo-blackjack:
+    image: mongo:latest
+    container_name: blackjack-mongo
+    ports:
+      - "27018:27017" # Puerto externo 27018
+    volumes:
+      - mongo_blackjack_data:/data/db
+    networks:
+      - blackjack-network
+
+volumes:
+  mysql_blackjack_data:
+  mongo_blackjack_data:
+
+networks:
+  blackjack-network:
+    driver: bridge
