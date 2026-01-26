@@ -23,4 +23,9 @@ public class PlayerServiceImpl implements PlayerService {
         Player newPlayer = new Player(null, name, 0);
         return playerRepository.save(newPlayer);
     }
+
+    @Override
+    public Mono<Void> deletePlayer(Long id) {
+        return playerRepository.deleteById(id);
+    }
 }

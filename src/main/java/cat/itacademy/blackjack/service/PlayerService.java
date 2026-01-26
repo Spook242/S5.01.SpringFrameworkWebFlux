@@ -7,4 +7,5 @@ import reactor.core.publisher.Mono;
 public interface PlayerService {
     Flux<Player> getAllPlayers();
     Mono<Player> createPlayer(String name);
+    Mono<Void> deletePlayer(Long id);
 }

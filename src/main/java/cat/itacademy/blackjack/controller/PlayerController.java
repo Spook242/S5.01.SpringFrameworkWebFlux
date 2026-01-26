@@ -23,4 +23,10 @@ public class PlayerController {
     public Mono<Player> createPlayer(@RequestBody Player player) {
         return playerService.createPlayer(player.getName());
     }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(org.springframework.http.HttpStatus.NO_CONTENT)
+    public Mono<Void> deletePlayer(@PathVariable Long id) {
+        return playerService.deletePlayer(id);
+    }
 }
