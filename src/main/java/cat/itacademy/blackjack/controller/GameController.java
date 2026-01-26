@@ -26,4 +26,9 @@ public class GameController {
     public Mono<Game> makeMove(@PathVariable String id, @RequestBody GamePlayRequest request) {
         return gameService.makeMove(id, request);
     }
+
+    @GetMapping("/{id}")
+    public Mono<Game> getGameById(@PathVariable String id) {
+        return gameService.getGameById(id);
+    }
 }

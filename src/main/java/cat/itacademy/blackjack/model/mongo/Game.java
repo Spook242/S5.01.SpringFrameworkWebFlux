@@ -15,5 +15,6 @@ public class Game {
     private List<Card> dealerCards;
     private List<Card> deck;
     private Integer playerScore;
+    private Integer dealerScore;
     private String status;
 }

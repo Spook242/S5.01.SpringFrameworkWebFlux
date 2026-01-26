@@ -114,24 +114,19 @@ public class GameServiceImpl implements GameService {
                         }
 
                     } else if ("STAND".equalsIgnoreCase(request.getAction())) {
-                        List<Card> dealerCards = game.getDealerCards();
-                        if (dealerCards == null) {
-                            dealerCards = new ArrayList<>();
-                        }
+                        List<Card> dealerCards = game.getDealerCards() != null ?
+                                game.getDealerCards() : new ArrayList<>();
 
                         int dealerScore = calculateScore(dealerCards);
 
                         while (dealerScore < 17) {
                             deck = getAvailableDeck(game);
-
-                            Card newCard = deck.remove(0);
-                            dealerCards.add(newCard);
-
-                            game.setDealerCards(dealerCards);
+                            dealerCards.add(deck.remove(0));
                             dealerScore = calculateScore(dealerCards);
                         }
 
                         game.setDealerCards(dealerCards);
+                        game.setDealerScore(dealerScore);
 
                         if (dealerScore > 21) {
                             game.setStatus("PLAYER_WINS");
@@ -147,6 +142,12 @@ public class GameServiceImpl implements GameService {
                     return gameRepository.save(game);
                 });
 
+
+    }
+    @Override
+    public Mono<Game> getGameById(String id) {
+        return gameRepository.findById(id)
+                .switchIfEmpty(Mono.error(new RuntimeException("Game not found with id: " + id)));
     }
 
 }
