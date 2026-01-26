@@ -1,4 +1,4 @@
-package cat.itacademy.blackjack_api;
+package cat.itacademy.blackjack;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
