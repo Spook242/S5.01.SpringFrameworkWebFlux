@@ -7,4 +7,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class GameCreationRequest {
     private String playerName;
+    private Double bet;
 }

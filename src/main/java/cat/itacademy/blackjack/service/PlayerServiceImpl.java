@@ -28,4 +28,15 @@ public class PlayerServiceImpl implements PlayerService {
     public Mono<Void> deletePlayer(Long id) {
         return playerRepository.deleteById(id);
     }
+
+    @Override
+    public Mono<Void> updatePlayerBalance(Long id, Double amount) {
+        return playerRepository.findById(id)
+                .flatMap(player -> {
+                    int newRanking = (int) (player.getRanking() + amount);
+                    player.setRanking(newRanking);
+                    return playerRepository.save(player);
+                })
+                .then();
+    }
 }

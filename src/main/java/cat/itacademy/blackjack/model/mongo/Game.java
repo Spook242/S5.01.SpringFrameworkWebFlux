@@ -17,4 +17,5 @@ public class Game {
     private Integer playerScore;
     private Integer dealerScore;
     private String status;
+    private Double bet;
 }

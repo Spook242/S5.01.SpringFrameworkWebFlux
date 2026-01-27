@@ -8,4 +8,5 @@ public interface PlayerService {
     Flux<Player> getAllPlayers();
     Mono<Player> createPlayer(String name);
     Mono<Void> deletePlayer(Long id);
+    Mono<Void> updatePlayerBalance(Long id, Double amount);
 }
