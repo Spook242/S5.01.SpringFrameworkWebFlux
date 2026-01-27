@@ -174,4 +174,9 @@ public class GameServiceImpl implements GameService {
                         used.getRank() == card.getRank() && used.getSuit() == card.getSuit()))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public Mono<Void> deleteGame(String id) {
+        return gameRepository.deleteById(id);
+    }
 }

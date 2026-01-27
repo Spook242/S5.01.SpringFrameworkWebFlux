@@ -9,4 +9,5 @@ public interface GameService {
     Mono<Game> createGame(GameCreationRequest request);
     Mono<Game> makeMove(String gameId, GamePlayRequest request);
     Mono<Game> getGameById(String id);
+    Mono<Void> deleteGame(String id);
 }
