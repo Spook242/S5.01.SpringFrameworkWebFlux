@@ -34,4 +34,9 @@ public class PlayerController {
     public Flux<Player> getRanking() {
         return playerService.getRanking();
     }
+
+    @PutMapping("/{id}")
+    public Mono<Player> updatePlayerName(@PathVariable Long id, @RequestBody Player playerRequest) {
+        return playerService.updatePlayerName(id, playerRequest.getName());
+    }
 }

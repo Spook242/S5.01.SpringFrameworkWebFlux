@@ -10,4 +10,5 @@ public interface PlayerService {
     Mono<Void> deletePlayer(Long id);
     Mono<Void> updatePlayerBalance(Long id, Double amount);
     Flux<Player> getRanking();
+    Mono<Player> updatePlayerName(Long id, String newName);
 }

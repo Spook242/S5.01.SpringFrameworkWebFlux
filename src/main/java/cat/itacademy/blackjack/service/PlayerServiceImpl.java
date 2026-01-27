@@ -44,4 +44,14 @@ public class PlayerServiceImpl implements PlayerService {
     public Flux<Player> getRanking() {
         return playerRepository.findAllByOrderByRankingDesc();
     }
+
+    @Override
+    public Mono<Player> updatePlayerName(Long id, String newName) {
+        return playerRepository.findById(id)
+                .switchIfEmpty(Mono.error(new RuntimeException("Player not found with id: " + id)))
+                .flatMap(player -> {
+                    player.setName(newName);
+                    return playerRepository.save(player);
+                });
+    }
 }
