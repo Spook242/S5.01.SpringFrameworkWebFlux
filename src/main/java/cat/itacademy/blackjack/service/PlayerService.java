@@ -9,4 +9,5 @@ public interface PlayerService {
     Mono<Player> createPlayer(String name);
     Mono<Void> deletePlayer(Long id);
     Mono<Void> updatePlayerBalance(Long id, Double amount);
+    Flux<Player> getRanking();
 }

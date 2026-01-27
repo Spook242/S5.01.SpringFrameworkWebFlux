@@ -39,4 +39,9 @@ public class PlayerServiceImpl implements PlayerService {
                 })
                 .then();
     }
+
+    @Override
+    public Flux<Player> getRanking() {
+        return playerRepository.findAllByOrderByRankingDesc();
+    }
 }

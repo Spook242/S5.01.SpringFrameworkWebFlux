@@ -29,4 +29,9 @@ public class PlayerController {
     public Mono<Void> deletePlayer(@PathVariable Long id) {
         return playerService.deletePlayer(id);
     }
+
+    @GetMapping("/ranking")
+    public Flux<Player> getRanking() {
+        return playerService.getRanking();
+    }
 }
