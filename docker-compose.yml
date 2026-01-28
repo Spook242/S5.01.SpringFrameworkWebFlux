@@ -1,33 +1,45 @@
 services:
-  # --- Base de datos MySQL (Para Jugadores/Ranking) ---
-  mysql-blackjack:
+  # Servicio de MySQL
+  mysql:
     image: mysql:8.0
-    container_name: blackjack-mysql
-    ports:
-      - "3307:3306" # Puerto externo 3307
+    container_name: blackjack_mysql
+    # ESTA ES LA LÍNEA NUEVA MÁGICA:
+    command: --default-authentication-plugin=mysql_native_password
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: blackjack_db
-    volumes:
-      - mysql_blackjack_data:/var/lib/mysql
-    networks:
-      - blackjack-network
-
-  # --- Base de datos MongoDB (Para Partidas/Historial) ---
-  mongo-blackjack:
-    image: mongo:latest
-    container_name: blackjack-mongo
     ports:
-      - "27018:27017" # Puerto externo 27018
+      - "3306:3306"
     volumes:
-      - mongo_blackjack_data:/data/db
-    networks:
-      - blackjack-network
+      - mysql_data:/var/lib/mysql
+
+  # Servicio de MongoDB
+  mongo:
+    image: mongo:latest
+    container_name: blackjack_mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  # Tu Aplicación (API)
+  app:
+    image: blackjack-api:latest
+    container_name: blackjack_app
+    build: .
+    ports:
+      - "8082:8081"
+    depends_on:
+      - mysql
+      - mongo
+    environment:
+      # Sobrescribimos la configuración de conexión para que apunte a los contenedores
+      # en lugar de a 'localhost'
+      SPRING_R2DBC_URL: r2dbc:mysql://mysql:3306/blackjack_db
+      SPRING_DATA_MONGODB_URI: mongodb://mongo:27017/blackjack_db
+      SPRING_R2DBC_USERNAME: root
+      SPRING_R2DBC_PASSWORD: root
 
 volumes:
-  mysql_blackjack_data:
-  mongo_blackjack_data:
-
-networks:
-  blackjack-network:
-    driver: bridge
+  mysql_data:
+  mongo_data:
